@@ -44,18 +44,21 @@ public:
 
     // Print the graph's adjacency list
     void printGraph() {
-        cout << "Graph's adjacency list:" << endl;
+        cout << "Neighborhood Roads:" << endl
+        	 << "=====================\n";
         for (int i = 0; i < adjList.size(); i++) {
-            cout << i << " --> ";
+            cout << "House " << i << " has roads connecting to:\n";
             for (Pair v : adjList[i])
-                cout << "(" << v.first << ", " << v.second << ") ";
-            cout << endl;
+                cout << "\tHouse " << v.first << " (Travel time: " << v.second << " minutes)\n";
         }
+        cout << endl;
     }
 };
 
 vector<int> DFS(Graph);
+void dispDFS(Graph);
 vector<int> BFS(Graph);
+void dispBFS(Graph);
 
 int main() {
     // Creates a vector of graph edges/weights
@@ -70,16 +73,6 @@ int main() {
 
     // Prints adjacency list representation of graph
     graph.printGraph();
-
-    cout << "DFS starting from vertex 0:\n";
-    vector<int> dSearch = DFS(graph);
-    for (int i : dSearch)
-    	cout << i << " ";
-
-    cout << "\nBFS starting from vertex 0:\n";
-    vector<int> bSearch = BFS(graph);
-    for (int i : bSearch)
-    	cout << i << " ";
 
     return 0;
 }
@@ -132,4 +125,16 @@ vector<int> BFS(Graph g) {
 		}
 	}
 	return search;
+}
+
+void dispDFS(Graph g) {
+	cout << "Trick-or-treat path (DPS) starting from House 0:\n";
+	cout << "=======================================\n";
+    vector<int> dSearch = DFS(g);
+}
+
+void dispBFS(Graph g) {
+	cout << "Asking neighbors for your lost package (BPS) starting from House 0:\n";
+	cout << "=======================================\n";
+    vector<int> bSearch = BFS(g);
 }
