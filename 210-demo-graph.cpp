@@ -149,17 +149,18 @@ void BFS(Graph g) {
 }
 
 int findClosest(Graph g, int i, vector<int> v) {
-	Pair shortest = g.adjList[i][0];
-	for (int i = 0; i < SIZE; i++) {
-		for (Pair p : g.adjList[i]){
-			if (shortest.second > p.second) {
-				auto it = find(v.begin(), v.end(), p.first);
-				if (it == v.end()) {
-					shortest = p;
-				}
+	Pair shortest;
+	shortest.second = 99;
+	for (Pair p : g.adjList[i]){
+		if (shortest.second > p.second) {
+			auto it = find(v.begin(), v.end(), p.first);
+			if (it == v.end()) {
+				shortest = p;
 			}
 		}
 	}
+	if (shortest.second == 99)
+		findClosest(g, g.adjList[i][0].first, v);
 	return shortest.first;
 }
 
