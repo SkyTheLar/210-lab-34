@@ -83,6 +83,9 @@ int main() {
 
     MST(graph);
 
+    vector<Edge> temp = {{1,2,1},{1,3,2},{3,4,2},{6,5,2}};
+    cout << connected(5,1,temp);
+
     return 0;
 }
 
@@ -192,7 +195,24 @@ void shortestPath(Graph g) {
 }
 
 bool connected(int s, int d, vector<Edge> g) {
-
+	bool c = false;
+	for (Edge e : g) {
+		if (e.src == s) {
+			if (e.dest == d)
+				return true;
+			else
+				c = connected(e.dest, d, g);
+		}
+	}
+	for (Edge e : g) {
+		if (e.dest == s) {
+			if (e.src == d)
+				c = true;
+			else
+				c = connected(e.src, d, g);
+		}
+	}
+	return c;
 }
 
 void MST(Graph g) {
