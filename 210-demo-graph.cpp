@@ -145,7 +145,16 @@ void BFS(Graph g) {
 	}
 }
 
-void shortestPath(Graph) {
+void shortestPath(Graph g) {
+	vector<int> visited = {0};
+	vector<int> paths (SIZE, 99);
+	paths[0] = 0;
+	for (Pair p : g.adjList[0])
+		paths[p.first] = p.second;
+	int next = g.adjList[0][0].first;
+	for (int i = 1; i < SIZE; i++) {
+
+	}
 
 }
 
