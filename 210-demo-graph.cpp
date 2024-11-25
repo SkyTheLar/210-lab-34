@@ -189,6 +189,7 @@ void shortestPath(Graph g) {
 	for (int i = 0; i < SIZE; i++) {
 		cout << "House " << i << ": " << paths[i] << endl;
 	}
+	cout << endl;
 }
 
 bool connected(int s, int d, vector<Edge> g) {
@@ -217,7 +218,7 @@ void MST(Graph g) {
 		int shortestSrc = 0;
 		for (int i = 0; i < SIZE; i++) {
 			for (Pair p : g.adjList[i]){
-				if (shortest.second > p.second) {
+				if (shortest.second >= p.second) {
 					auto it = find(inTree.begin(), inTree.end(), p);
 					if (it == inTree.end() && !connected(i, p.first, spanTree)) {
 						shortest = p;
@@ -229,6 +230,9 @@ void MST(Graph g) {
 	spanTree.push_back({shortestSrc,shortest.first,shortest.second});
 	inTree.push_back(shortest);
 	}
+	cout << "Minimum spanning tree edges:\n";
 	for (Edge e : spanTree)
-		cout << "(" << e.src << ", " << e.dest << ", " << e.weight << ")\n";
+		cout << "Edge from " << e.src << " to " << e.dest
+		 	 << " with capacity: " << e.weight << " units\n";
+	cout << endl;
 }
