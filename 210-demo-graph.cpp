@@ -7,6 +7,7 @@ COMSC 210 | Lab 34 | Skylar Robinson | IDE: Used Eclipse
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <algorithm>
 using namespace std;
 
 const int SIZE = 7;
@@ -52,7 +53,7 @@ public:
     }
 };
 
-void DFS(Graph);
+vector<int> DFS(Graph);
 void BFS(Graph);
 
 int main() {
@@ -68,22 +69,31 @@ int main() {
     // Prints adjacency list representation of graph
     graph.printGraph();
 
-    DFS(graph);
+    vector<int> dSearch = DFS(graph);
+    for (int i : dSearch)
+    	cout << i << " ";
 
     return 0;
 }
 
-void DFS(Graph g) {
+vector<int> DFS(Graph g) {
 	vector<int> search;
 	stack<int> toVisit;
 	search.push_back(0); //0 is always the first node
 	for (Pair p : g.adjList[0]) {
 		toVisit.push(p.first);
 	}
-	for (int i = 0; i < 3; i++){
-		cout << toVisit.top();
+	while (!toVisit.empty()) {
+		int next = toVisit.top();
+		search.push_back(toVisit.top());
 		toVisit.pop();
+		for (Pair p : g.adjList[next]) {
+			auto it = find(search.begin(), search.end(), p.first);
+			if (it == search.end())
+				toVisit.push(p.first);
+		}
 	}
+	return search;
 }
 
 void BFS(Graph) {
