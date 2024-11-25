@@ -57,6 +57,7 @@ public:
 
 void DFS(Graph);
 void BFS(Graph);
+int findClosest(Graph, int, vector<int>);
 void shortestPath(Graph);
 // void MST(Graph);
 
@@ -145,15 +146,31 @@ void BFS(Graph g) {
 	}
 }
 
+int findClosest(Graph g, int i, vector<int> v) {
+	Pair shortest = g.adjList[i][0];
+	for (int i = 0; i < SIZE; i++) {
+		for (Pair p : g.adjList[i]){
+			if (shortest.second > p.second) {
+				auto it = find(v.begin(), v.end(), p.first);
+				if (it == v.end()) {
+					shortest = p;
+				}
+			}
+		}
+	}
+	return shortest.first;
+}
+
 void shortestPath(Graph g) {
 	vector<int> visited = {0};
 	vector<int> paths (SIZE, 99);
 	paths[0] = 0;
-	for (Pair p : g.adjList[0])
-		paths[p.first] = p.second;
-	int next = g.adjList[0][0].first;
-	for (int i = 1; i < SIZE; i++) {
-
+	int next = 0;
+	for (int i = 0; i < SIZE; i++) {
+		for (Pair p : g.adjList[next])
+			paths[p.first] = p.second;
+		next = findClosest(g, next, visited);
+		visited.push_back(next);
 	}
 
 }
