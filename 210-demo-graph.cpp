@@ -70,12 +70,12 @@ int main() {
     // Prints adjacency list representation of graph
     graph.printGraph();
 
+    cout << "DFS starting from vertex 0:\n";
     vector<int> dSearch = DFS(graph);
     for (int i : dSearch)
     	cout << i << " ";
 
-    cout << endl;
-
+    cout << "\nBFS starting from vertex 0:\n";
     vector<int> bSearch = BFS(graph);
     for (int i : bSearch)
     	cout << i << " ";
