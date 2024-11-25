@@ -61,6 +61,7 @@ int findClosest(Graph, int, vector<int>);
 void shortestPath(Graph);
 bool connected(int, int, vector<Edge>);
 void MST(Graph);
+int menu();
 
 int main() {
     // Creates a vector of graph edges/weights
@@ -74,14 +75,18 @@ int main() {
     Graph graph(edges);
 
     // Prints adjacency list representation of graph
-    graph.printGraph();
-
-    DFS(graph);
-    BFS(graph);
-
-    shortestPath(graph);
-
-    MST(graph);
+    int choice = menu();
+    while (choice != 0) {
+    	switch (choice) {
+    	case 1: graph.printGraph(); break;
+    	case 2: DFS(graph); break;
+    	case 3: BFS(graph); break;
+    	case 4: shortestPath(graph); break;
+    	case 5: MST(graph); break;
+    	default: break;
+    	}
+    	choice = menu();
+    }
 
     return 0;
 }
@@ -235,4 +240,18 @@ void MST(Graph g) {
 		cout << "Edge from " << e.src << " to " << e.dest
 		 	 << " with capacity: " << e.weight << " units\n";
 	cout << endl;
+}
+
+int menu() {
+	int choice;
+	cout << "Neighborhood roads menu:\n"
+		 << "[1] Display road network\n"
+		 << "[2] Show trick-or-treating route (DFS)\n"
+		 << "[3] Show package search path (BFS)\n"
+		 << "[4] Calculate shortest paths\n"
+		 << "[5] Find minimum spanning tree\n"
+		 << "[0] Exit\n";
+	cout << "Enter a choice by number: ";
+	cin >> choice;
+	return choice;
 }
