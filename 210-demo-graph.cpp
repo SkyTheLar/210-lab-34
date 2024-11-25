@@ -79,6 +79,7 @@ int main() {
 }
 
 void DFS(Graph g) {
+	vector<int> visited = {0};
 	vector<int> search;
 	stack<int> toVisit;
 	cout << "Trick-or-treat path (DPS) starting from House 0:\n";
@@ -88,23 +89,22 @@ void DFS(Graph g) {
 	for (Pair p : g.adjList[0]) {
 		cout << "\tNext house: House " << p.first << endl;
 		toVisit.push(p.first);
+		visited.push_back(p.first);
 	}
 	while (!toVisit.empty()) {
 		int next = toVisit.top();
-		//check if node is already in list, if not add it
-		auto it = find(search.begin(), search.end(), toVisit.top());
-			if (it == search.end()) {
-				cout << "Searching House " << next << endl;
-				search.push_back(toVisit.top());
-			}
+		//add node to list
+		cout << "Stopping at House " << next << endl;
+		search.push_back(toVisit.top());
 		//remove node from queue
 		toVisit.pop();
 		//add unvisited adjacent nodes to the queue
 		for (Pair p : g.adjList[next]) {
-			auto it = find(search.begin(), search.end(), p.first);
-			if (it == search.end()) {
+			auto it = find(visited.begin(), visited.end(), p.first);
+			if (it == visited.end()) {
 				cout << "\tNext house: House " << p.first << endl;
 				toVisit.push(p.first);
+				visited.push_back(p.first);
 			}
 		}
 	}
@@ -112,6 +112,7 @@ void DFS(Graph g) {
 }
 
 void BFS(Graph g) {
+	vector<int> visited = {0};
 	vector<int> search;
 	deque<int> toVisit;
 	cout << "Asking neighbors for your lost package (BPS) starting from House 0:\n";
@@ -121,23 +122,22 @@ void BFS(Graph g) {
 	for (Pair p : g.adjList[0]) {
 		cout << "\tNext house: House " << p.first << endl;
 		toVisit.push_back(p.first);
+		visited.push_back(p.first);
 	}
 	while (!toVisit.empty()) {
 		int next = toVisit.front();
-		//check if node is already in list, if not add it
-		auto it = find(search.begin(), search.end(), toVisit.front());
-			if (it == search.end()) {
-				search.push_back(toVisit.front());
-				cout << "Searching House " << next << endl;
-			}
+		//add node to list
+		search.push_back(toVisit.front());
+		cout << "Searching House " << next << endl;
 		//remove node from queue
 		toVisit.pop_front();
 		//add unvisited adjacent nodes to the queue
 		for (Pair p : g.adjList[next]) {
-			auto it = find(search.begin(), search.end(), p.first);
-			if (it == search.end()) {
+			auto it = find(visited.begin(), visited.end(), p.first);
+			if (it == visited.end()) {
 				cout << "\tNext house: House " << p.first << endl;
 				toVisit.push_back(p.first);
+				visited.push_back(p.first);
 			}
 		}
 	}
