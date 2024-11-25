@@ -59,7 +59,8 @@ void DFS(Graph);
 void BFS(Graph);
 int findClosest(Graph, int, vector<int>);
 void shortestPath(Graph);
-// void MST(Graph);
+bool connected(int, int, vector<Edge>);
+void MST(Graph);
 
 int main() {
     // Creates a vector of graph edges/weights
@@ -79,6 +80,8 @@ int main() {
     BFS(graph);
 
     shortestPath(graph);
+
+    MST(graph);
 
     return 0;
 }
@@ -188,19 +191,30 @@ void shortestPath(Graph g) {
 	}
 }
 
-/*
+bool connected(int s, int d, vector<Edge> g) {
+
+}
+
 void MST(Graph g) {
 	vector<Edge> spanTree;
+	vector<Pair> inTree;
 	while (spanTree.size() < SIZE - 1) {
 		Pair shortest = g.adjList[0][0];
 		int shortestSrc = 0;
 		for (int i = 0; i < SIZE; i++) {
 			for (Pair p : g.adjList[i]){
-				if (shortest.second > p.second)
-					shortest = p;
-					shortestSrc = i;
+				if (shortest.second > p.second) {
+					auto it = find(inTree.begin(), inTree.end(), p);
+					if (it == inTree.end()) {
+						shortest = p;
+						shortestSrc = i;
+					}
+				}
 			}
 		}
+	spanTree.push_back({shortestSrc,shortest.first,shortest.second});
+	inTree.push_back(shortest);
 	}
+	for (Edge e : spanTree)
+		cout << "(" << e.src << ", " << e.dest << ", " << e.weight << ")\n";
 }
-*/
