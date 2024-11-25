@@ -55,10 +55,8 @@ public:
     }
 };
 
-vector<int> DFS(Graph);
-void dispDFS(Graph);
-vector<int> BFS(Graph);
-void dispBFS(Graph);
+void DFS(Graph);
+void BFS(Graph);
 
 int main() {
     // Creates a vector of graph edges/weights
@@ -74,67 +72,73 @@ int main() {
     // Prints adjacency list representation of graph
     graph.printGraph();
 
+    DFS(graph);
+    BFS(graph);
+
     return 0;
 }
 
-vector<int> DFS(Graph g) {
+void DFS(Graph g) {
 	vector<int> search;
 	stack<int> toVisit;
+	cout << "Trick-or-treat path (DPS) starting from House 0:\n";
+	cout << "=======================================\n";
 	search.push_back(0); //0 is always the first node
+	cout << "Stopping at House 0\n";
 	for (Pair p : g.adjList[0]) {
+		cout << "\tNext house: House " << p.first << endl;
 		toVisit.push(p.first);
 	}
 	while (!toVisit.empty()) {
 		int next = toVisit.top();
 		//check if node is already in list, if not add it
 		auto it = find(search.begin(), search.end(), toVisit.top());
-			if (it == search.end())
+			if (it == search.end()) {
+				cout << "Searching House " << next << endl;
 				search.push_back(toVisit.top());
+			}
 		//remove node from queue
 		toVisit.pop();
 		//add unvisited adjacent nodes to the queue
 		for (Pair p : g.adjList[next]) {
 			auto it = find(search.begin(), search.end(), p.first);
-			if (it == search.end())
+			if (it == search.end()) {
+				cout << "\tNext house: House " << p.first << endl;
 				toVisit.push(p.first);
+			}
 		}
 	}
-	return search;
+	cout << endl;
 }
 
-vector<int> BFS(Graph g) {
+void BFS(Graph g) {
 	vector<int> search;
 	deque<int> toVisit;
+	cout << "Asking neighbors for your lost package (BPS) starting from House 0:\n";
+	cout << "=======================================\n";
 	search.push_back(0); //0 is always the first node
+	cout << "Searching House 0\n";
 	for (Pair p : g.adjList[0]) {
+		cout << "\tNext house: House " << p.first << endl;
 		toVisit.push_back(p.first);
 	}
 	while (!toVisit.empty()) {
 		int next = toVisit.front();
 		//check if node is already in list, if not add it
 		auto it = find(search.begin(), search.end(), toVisit.front());
-			if (it == search.end())
+			if (it == search.end()) {
 				search.push_back(toVisit.front());
+				cout << "Searching House " << next << endl;
+			}
 		//remove node from queue
 		toVisit.pop_front();
 		//add unvisited adjacent nodes to the queue
 		for (Pair p : g.adjList[next]) {
 			auto it = find(search.begin(), search.end(), p.first);
-			if (it == search.end())
+			if (it == search.end()) {
+				cout << "\tNext house: House " << p.first << endl;
 				toVisit.push_back(p.first);
+			}
 		}
 	}
-	return search;
-}
-
-void dispDFS(Graph g) {
-	cout << "Trick-or-treat path (DPS) starting from House 0:\n";
-	cout << "=======================================\n";
-    vector<int> dSearch = DFS(g);
-}
-
-void dispBFS(Graph g) {
-	cout << "Asking neighbors for your lost package (BPS) starting from House 0:\n";
-	cout << "=======================================\n";
-    vector<int> bSearch = BFS(g);
 }
