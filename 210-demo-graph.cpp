@@ -7,6 +7,7 @@ COMSC 210 | Lab 34 | Skylar Robinson | IDE: Used Eclipse
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <deque>
 #include <algorithm>
 using namespace std;
 
@@ -54,7 +55,7 @@ public:
 };
 
 vector<int> DFS(Graph);
-void BFS(Graph);
+vector<int> BFS(Graph);
 
 int main() {
     // Creates a vector of graph edges/weights
@@ -73,6 +74,12 @@ int main() {
     for (int i : dSearch)
     	cout << i << " ";
 
+    cout << endl;
+
+    vector<int> bSearch = BFS(graph);
+    for (int i : bSearch)
+    	cout << i << " ";
+
     return 0;
 }
 
@@ -85,8 +92,13 @@ vector<int> DFS(Graph g) {
 	}
 	while (!toVisit.empty()) {
 		int next = toVisit.top();
-		search.push_back(toVisit.top());
+		//check if node is already in list, if not add it
+		auto it = find(search.begin(), search.end(), toVisit.top());
+			if (it == search.end())
+				search.push_back(toVisit.top());
+		//remove node from queue
 		toVisit.pop();
+		//add unvisited adjacent nodes to the queue
 		for (Pair p : g.adjList[next]) {
 			auto it = find(search.begin(), search.end(), p.first);
 			if (it == search.end())
@@ -96,6 +108,27 @@ vector<int> DFS(Graph g) {
 	return search;
 }
 
-void BFS(Graph) {
-
+vector<int> BFS(Graph g) {
+	vector<int> search;
+	deque<int> toVisit;
+	search.push_back(0); //0 is always the first node
+	for (Pair p : g.adjList[0]) {
+		toVisit.push_back(p.first);
+	}
+	while (!toVisit.empty()) {
+		int next = toVisit.front();
+		//check if node is already in list, if not add it
+		auto it = find(search.begin(), search.end(), toVisit.front());
+			if (it == search.end())
+				search.push_back(toVisit.front());
+		//remove node from queue
+		toVisit.pop_front();
+		//add unvisited adjacent nodes to the queue
+		for (Pair p : g.adjList[next]) {
+			auto it = find(search.begin(), search.end(), p.first);
+			if (it == search.end())
+				toVisit.push_back(p.first);
+		}
+	}
+	return search;
 }
