@@ -83,9 +83,6 @@ int main() {
 
     MST(graph);
 
-    vector<Edge> temp = {{1,2,1},{1,3,2},{3,4,2},{3,5,2}};
-    cout << connected(2,5,temp);
-
     return 0;
 }
 
@@ -222,7 +219,7 @@ void MST(Graph g) {
 			for (Pair p : g.adjList[i]){
 				if (shortest.second > p.second) {
 					auto it = find(inTree.begin(), inTree.end(), p);
-					if (it == inTree.end()) {
+					if (it == inTree.end() && !connected(i, p.first, spanTree)) {
 						shortest = p;
 						shortestSrc = i;
 					}
