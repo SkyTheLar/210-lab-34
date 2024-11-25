@@ -57,6 +57,8 @@ public:
 
 void DFS(Graph);
 void BFS(Graph);
+void shortestPath(Graph);
+// void MST(Graph);
 
 int main() {
     // Creates a vector of graph edges/weights
@@ -142,3 +144,24 @@ void BFS(Graph g) {
 		}
 	}
 }
+
+void shortestPath(Graph) {
+
+}
+
+/*
+void MST(Graph g) {
+	vector<Edge> spanTree;
+	while (spanTree.size() < SIZE - 1) {
+		Pair shortest = g.adjList[0][0];
+		int shortestSrc = 0;
+		for (int i = 0; i < SIZE; i++) {
+			for (Pair p : g.adjList[i]){
+				if (shortest.second > p.second)
+					shortest = p;
+					shortestSrc = i;
+			}
+		}
+	}
+}
+*/
