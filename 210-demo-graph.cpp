@@ -146,6 +146,7 @@ void BFS(Graph g) {
 			}
 		}
 	}
+	cout << endl;
 }
 
 int findClosest(Graph g, int i, vector<int> v) {
@@ -160,7 +161,7 @@ int findClosest(Graph g, int i, vector<int> v) {
 		}
 	}
 	if (shortest.second == 99)
-		findClosest(g, g.adjList[i][0].first, v);
+		return -1;
 	return shortest.first;
 }
 
@@ -174,11 +175,16 @@ void shortestPath(Graph g) {
 			if (paths[next] + p.second < paths[p.first])
 				paths[p.first] = paths[next] + p.second;
 		next = findClosest(g, next, visited);
-		cout << endl << next << endl;
+		if (next == -1 && i + 1 < SIZE) {
+			i--;
+			next = 0;
+		}
 		visited.push_back(next);
 	}
-	for (int i : paths)
-		cout << i << " ";
+	cout << "Shortest path from House 0:\n";
+	for (int i = 0; i < SIZE; i++) {
+		cout << "House " << i << ": " << paths[i] << endl;
+	}
 }
 
 /*
