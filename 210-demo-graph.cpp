@@ -154,6 +154,7 @@ int findClosest(Graph g, int i, vector<int> v) {
 	shortest.second = 99;
 	for (Pair p : g.adjList[i]){
 		if (shortest.second > p.second) {
+			//check that node isn't visited
 			auto it = find(v.begin(), v.end(), p.first);
 			if (it == v.end()) {
 				shortest = p;
