@@ -78,6 +78,8 @@ int main() {
     DFS(graph);
     BFS(graph);
 
+    shortestPath(graph);
+
     return 0;
 }
 
@@ -168,11 +170,14 @@ void shortestPath(Graph g) {
 	int next = 0;
 	for (int i = 0; i < SIZE; i++) {
 		for (Pair p : g.adjList[next])
-			paths[p.first] = p.second;
+			if (paths[next] + p.second < paths[p.first])
+				paths[p.first] = paths[next] + p.second;
 		next = findClosest(g, next, visited);
+		cout << endl << next << endl;
 		visited.push_back(next);
 	}
-
+	for (int i : paths)
+		cout << i << " ";
 }
 
 /*
